@@ -4,4 +4,5 @@
     <string name="ten_day_forecast">10 day forecast</string>
     <string name="temp">%d °C</string>
     <string name="today">Today</string>
+    <string name="no_data">No data.\n Check your Internet connection and try again.</string>
 </resources>

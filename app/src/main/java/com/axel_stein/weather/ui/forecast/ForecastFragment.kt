@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,6 +46,7 @@ class ForecastFragment : Fragment() {
 
         viewModel.forecasts.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+            showForecastTitle()
         }
         viewModel.currentForecast.observe(viewLifecycleOwner) {
             setCurrentForecast(it)
@@ -52,6 +54,17 @@ class ForecastFragment : Fragment() {
         adapter.onItemClickListener = {
             viewModel.setCurrent(it)
         }
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            binding.progressBar.isVisible = it
+        }
+        viewModel.isNoDataShown.observe(viewLifecycleOwner) {
+            binding.noData.isVisible = it
+        }
+    }
+
+    private fun showForecastTitle(isShown: Boolean = true) = with(binding) {
+        divider.isVisible = isShown
+        forecastTitle.isVisible = isShown
     }
 
     private fun setCurrentForecast(forecast: Forecast?) = with(binding) {
