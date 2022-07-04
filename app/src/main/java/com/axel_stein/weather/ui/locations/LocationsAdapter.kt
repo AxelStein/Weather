@@ -8,14 +8,17 @@ import com.axel_stein.weather.data.entity.Location
 import com.axel_stein.weather.databinding.ItemLocationBinding
 
 class LocationsAdapter : ListAdapter<Location, LocationsAdapter.ViewHolder>(Location.Companion) {
-    var onItemClickListener: (() -> Unit)? = null
+    var onItemClickListener: ((Location) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemLocationBinding.inflate(inflater, parent, false)
         return ViewHolder(binding).apply {
             itemView.setOnClickListener {
-                onItemClickListener?.invoke()
+                val pos = adapterPosition
+                if (pos in 0 until itemCount) {
+                    onItemClickListener?.invoke(getItem(pos))
+                }
             }
         }
     }

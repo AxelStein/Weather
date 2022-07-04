@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -30,7 +31,7 @@ class LocationsFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
         adapter.onItemClickListener = {
-            findNavController().navigate(R.id.action_LocationsFragment_to_ForecastFragment)
+            findNavController().navigate(R.id.actionOpenForecast, bundleOf("city" to it.city))
         }
 
         viewModel.locations.observe(viewLifecycleOwner) {

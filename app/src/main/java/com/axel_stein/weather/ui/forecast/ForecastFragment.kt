@@ -22,6 +22,13 @@ class ForecastFragment : Fragment() {
     private val adapter = ForecastAdapter()
     private val viewModel: ForecastViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.getString("city")?.let {
+            viewModel.setCity(it)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

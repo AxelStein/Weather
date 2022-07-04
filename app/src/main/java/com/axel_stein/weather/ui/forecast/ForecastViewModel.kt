@@ -16,7 +16,7 @@ class ForecastViewModel : ViewModel() {
         list.firstOrNull { it.isCurrent }
     }
 
-    init {
+    fun setCity(city: String) {
         val forecasts = mutableListOf<Forecast>()
         val rand = Random(System.currentTimeMillis())
         for (i in 0 until 10) {
