@@ -19,10 +19,9 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
     }
 
     override fun getItemCount() = 10
 
-    class ViewHolder(private val binding: ItemLocationBinding) : RecyclerView.ViewHolder(binding.root) {}
+    class ViewHolder(val binding: ItemLocationBinding) : RecyclerView.ViewHolder(binding.root) {}
 }
