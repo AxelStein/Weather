@@ -5,13 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.axel_stein.weather.R
+import com.axel_stein.weather.data.entity.Forecast
 import com.axel_stein.weather.databinding.FragmentForecastBinding
+import com.bumptech.glide.Glide
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class ForecastFragment : Fragment() {
     private var _binding: FragmentForecastBinding? = null
     private val binding get() = _binding!!
+    private val adapter = ForecastAdapter()
+    private val viewModel: ForecastViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +34,34 @@ class ForecastFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.forecastsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        binding.forecastsRecyclerView.adapter = ForecastAdapter()
+        binding.forecastsRecyclerView.adapter = adapter
+
+        viewModel.forecasts.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+        viewModel.currentForecast.observe(viewLifecycleOwner) {
+            setCurrentForecast(it)
+        }
+        adapter.onItemClickListener = {
+            viewModel.setCurrent(it)
+        }
+    }
+
+    private fun setCurrentForecast(forecast: Forecast?) = with(binding) {
+        city.text = forecast?.city
+        dateTime.text = forecast?.dateTime?.let {
+            if (it == LocalDate.now()) {
+                getString(R.string.today)
+            } else {
+                it.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+            }
+        }
+        temp.text = getString(R.string.temp, forecast?.temp)
+        summary.text = forecast?.summary
+
+        Glide.with(icon)
+            .load(forecast?.iconUrl)
+            .into(icon)
     }
 
     override fun onDestroyView() {

@@ -25,6 +25,7 @@ class LocationsAdapter : ListAdapter<Location, LocationsAdapter.ViewHolder>(Loca
     }
 
     class ViewHolder(private val binding: ItemLocationBinding) : RecyclerView.ViewHolder(binding.root) {
+
         fun setItem(item: Location) {
             binding.city.text = item.city
         }
