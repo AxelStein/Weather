@@ -8,29 +8,36 @@
 
     <TextView
         android:id="@+id/city"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:maxLines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/icon"
         tools:text="London"/>
 
     <TextView
         android:id="@+id/date_time"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/city"
         app:layout_constraintTop_toBottomOf="@+id/city"
+        app:layout_constraintEnd_toStartOf="@+id/icon"
+        android:maxLines="1"
         tools:text="Today"/>
 
     <TextView
         android:id="@+id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="48dp"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="@+id/temp"
         app:layout_constraintTop_toBottomOf="@+id/temp"
+        android:maxLength="32"
         tools:text="Sunny"/>
 
     <TextView
@@ -39,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:maxLines="1"
         android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -50,7 +58,7 @@
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/summary"
-        app:layout_constraintEnd_toStartOf="@+id/temp"
+        app:layout_constraintEnd_toStartOf="@+id/summary"
         app:layout_constraintTop_toTopOf="@+id/temp"
         tools:src="@drawable/partly_cloudy"/>
 
@@ -60,9 +68,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="?android:attr/dividerHorizontal"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/summary"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/summary" />
 
     <TextView
         android:id="@+id/forecast_title"
@@ -73,10 +79,8 @@
         android:text="@string/ten_day_forecast"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="?android:attr/textColorPrimary"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/forecastsRecyclerView"
@@ -90,34 +94,44 @@
         app:layout_constraintTop_toBottomOf="@id/forecast_title"
         tools:listitem="@layout/item_forecast"/>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
+    <RelativeLayout
+        android:id="@+id/error_layout"
+        android:background="?android:attr/windowBackground"
         android:visibility="gone"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:visibility="visible" />
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/no_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="16dp"
-        android:gravity="center"
-        android:text="@string/no_data"
-        android:textColor="?android:attr/textColorPrimary"
+        <TextView
+            android:id="@+id/error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="16dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            tools:text="@string/no_data"
+            android:textColor="?android:attr/textColorPrimary"
+            app:drawableTopCompat="@drawable/ic_cloud_off_48dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/progress_layout"
+        android:background="?android:attr/windowBackground"
         android:visibility="gone"
-        app:drawableTopCompat="@drawable/ic_cloud_off_48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,7 +31,10 @@ class LocationsFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
         adapter.onItemClickListener = {
-            findNavController().navigate(R.id.actionOpenForecast, bundleOf("city" to it.city))
+            findNavController().navigate(
+                R.id.actionOpenForecast,
+                bundleOf("city" to it.city, "country" to it.countryCode)
+            )
         }
 
         viewModel.locations.observe(viewLifecycleOwner) {

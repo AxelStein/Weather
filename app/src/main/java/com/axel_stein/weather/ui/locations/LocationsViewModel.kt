@@ -11,8 +11,9 @@ class LocationsViewModel : ViewModel() {
 
     init {
         _locations.value = listOf(
-            Location(1, "Kyiv", "UA"),
-            Location(2, "London", "GB"),
+            Location(1, "Lutsk", "UA"),
+            Location(2, "Kyiv", "UA"),
+            Location(3, "London", "GB"),
         )
     }
 }

@@ -35,14 +35,15 @@ class ForecastAdapter : ListAdapter<Forecast, ForecastAdapter.ViewHolder>(Foreca
         private val context = binding.root.context
 
         fun setItem(forecast: Forecast) = with(binding) {
-            root.isSelected = forecast.isCurrent
+            root.isActivated = forecast.isCurrent
 
             minTemp.text = context.getString(R.string.temp, forecast.minTemp)
             maxTemp.text = context.getString(R.string.temp, forecast.maxTemp)
-            weekDay.text = forecast.dateTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ROOT)
+            weekDay.text = forecast.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ROOT)
 
             Glide.with(icon)
                 .load(forecast.iconUrl)
+                .error(R.drawable.ic_error_24dp)
                 .into(icon)
         }
     }

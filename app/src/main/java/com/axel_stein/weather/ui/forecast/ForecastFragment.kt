@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,10 +14,13 @@ import com.axel_stein.weather.R
 import com.axel_stein.weather.data.entity.Forecast
 import com.axel_stein.weather.databinding.FragmentForecastBinding
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import java.util.*
 
+@AndroidEntryPoint
 class ForecastFragment : Fragment() {
     private var _binding: FragmentForecastBinding? = null
     private val binding get() = _binding!!
@@ -25,9 +29,11 @@ class ForecastFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.getString("city")?.let {
-            viewModel.setCity(it)
-        }
+
+        val city = arguments?.getString("city") ?: ""
+        val countryCode = arguments?.getString("country") ?: ""
+
+        viewModel.setCity(city, countryCode)
     }
 
     override fun onCreateView(
@@ -46,7 +52,6 @@ class ForecastFragment : Fragment() {
 
         viewModel.forecasts.observe(viewLifecycleOwner) {
             adapter.submitList(it)
-            showForecastTitle()
         }
         viewModel.currentForecast.observe(viewLifecycleOwner) {
             setCurrentForecast(it)
@@ -55,25 +60,33 @@ class ForecastFragment : Fragment() {
             viewModel.setCurrent(it)
         }
         viewModel.isLoading.observe(viewLifecycleOwner) {
-            binding.progressBar.isVisible = it
+            binding.progressLayout.isVisible = it
         }
         viewModel.isNoDataShown.observe(viewLifecycleOwner) {
-            binding.noData.isVisible = it
+            showErrorMessage(it, R.string.no_data)
+        }
+        viewModel.isErrorShown.observe(viewLifecycleOwner) {
+            showErrorMessage(it, R.string.error)
+        }
+        viewModel.isConnectionErrorShown.observe(viewLifecycleOwner) {
+            if (it) {
+                Snackbar.make(binding.root, R.string.connection_error, Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun showForecastTitle(isShown: Boolean = true) = with(binding) {
-        divider.isVisible = isShown
-        forecastTitle.isVisible = isShown
+    private fun showErrorMessage(isShown: Boolean, @StringRes messageRes: Int) = with(binding) {
+        errorLayout.isVisible = isShown
+        errorMessage.setText(messageRes)
     }
 
     private fun setCurrentForecast(forecast: Forecast?) = with(binding) {
         city.text = forecast?.city
-        dateTime.text = forecast?.dateTime?.let {
+        dateTime.text = forecast?.date?.let {
             if (it == LocalDate.now()) {
                 getString(R.string.today)
             } else {
-                it.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+                it.format(DateTimeFormatter.ofPattern("d MMM, yyyy", Locale.US))
             }
         }
         temp.text = getString(R.string.temp, forecast?.temp)
@@ -81,6 +94,7 @@ class ForecastFragment : Fragment() {
 
         Glide.with(icon)
             .load(forecast?.iconUrl)
+            .error(R.drawable.ic_error_24dp)
             .into(icon)
     }
 

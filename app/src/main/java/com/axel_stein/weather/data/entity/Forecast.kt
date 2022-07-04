@@ -1,19 +1,28 @@
 package com.axel_stein.weather.data.entity
 
 import androidx.recyclerview.widget.DiffUtil
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import java.time.LocalDate
 
+@Entity
 data class Forecast(
-    val id: Long,
-    val city: String = "",
-    val dateTime: LocalDate = LocalDate.now(),
-    val temp: Int = 0,
-    val minTemp: Int = 0,
-    val maxTemp: Int = 0,
-    val iconUrl: String = "",
-    val summary: String = "",
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0L,
+    var city: String = "",
+    var countryCode: String = "",
+    var date: LocalDate = LocalDate.now(),
+    var temp: Int = 0,
+    var minTemp: Int = 0,
+    var maxTemp: Int = 0,
+    var iconUrl: String = "",
+    var summary: String = "",
+
+    @Ignore
     var isCurrent: Boolean = false,
 ) {
+
     companion object : DiffUtil.ItemCallback<Forecast>() {
         override fun areItemsTheSame(oldItem: Forecast, newItem: Forecast): Boolean {
             return oldItem.id == newItem.id

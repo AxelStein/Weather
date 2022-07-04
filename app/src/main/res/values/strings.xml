@@ -5,4 +5,6 @@
     <string name="temp">%d °C</string>
     <string name="today">Today</string>
     <string name="no_data">No data.\n Check your Internet connection and try again.</string>
+    <string name="connection_error">Check your Internet connection</string>
+    <string name="error">Something really bad occurred :(</string>
 </resources>
