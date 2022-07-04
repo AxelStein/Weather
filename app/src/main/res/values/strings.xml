@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="forecast_fragment_label">Forecast</string>
+    <string name="ten_day_forecast">10 day forecast</string>
+</resources>

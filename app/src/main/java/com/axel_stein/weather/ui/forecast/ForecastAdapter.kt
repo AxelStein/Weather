@@ -1,0 +1,23 @@
+package com.axel_stein.weather.ui.forecast
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.axel_stein.weather.databinding.ItemForecastBinding
+
+class ForecastAdapter : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(ItemForecastBinding.inflate(LayoutInflater.from(parent.context)))
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+    }
+
+    override fun getItemCount() = 10 // todo
+
+    class ViewHolder(private val binding: ItemForecastBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    }
+}
