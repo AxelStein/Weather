@@ -8,7 +8,9 @@ import com.axel_stein.weather.databinding.ItemForecastBinding
 class ForecastAdapter : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemForecastBinding.inflate(LayoutInflater.from(parent.context)))
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemForecastBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
