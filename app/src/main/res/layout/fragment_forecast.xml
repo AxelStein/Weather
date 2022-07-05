@@ -14,30 +14,30 @@
         android:layout_marginTop="16dp"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintEnd_toStartOf="@+id/icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/icon"
         tools:text="London"/>
 
     <TextView
         android:id="@+id/date_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@+id/icon"
         app:layout_constraintStart_toStartOf="@+id/city"
         app:layout_constraintTop_toBottomOf="@+id/city"
-        app:layout_constraintEnd_toStartOf="@+id/icon"
-        android:maxLines="1"
         tools:text="Today"/>
 
     <TextView
         android:id="@+id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="48dp"
+        android:maxLength="32"
         android:maxLines="1"
+        android:minWidth="48dp"
         app:layout_constraintEnd_toEndOf="@+id/temp"
         app:layout_constraintTop_toBottomOf="@+id/temp"
-        android:maxLength="32"
         tools:text="Sunny"/>
 
     <TextView
@@ -96,40 +96,40 @@
 
     <RelativeLayout
         android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="?android:attr/windowBackground"
-        android:visibility="gone"
         android:clickable="true"
         android:focusable="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/error_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:drawablePadding="16dp"
             android:gravity="center"
-            android:layout_centerInParent="true"
-            tools:text="@string/no_data"
             android:textColor="?android:attr/textColorPrimary"
-            app:drawableTopCompat="@drawable/ic_cloud_off_48dp" />
+            app:drawableTopCompat="@drawable/ic_cloud_off_48dp"
+            tools:text="@string/no_data" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="?android:attr/windowBackground"
-        android:visibility="gone"
         android:clickable="true"
         android:focusable="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:visibility="gone">
 
         <ProgressBar
             style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:indeterminate="true" />
 
     </RelativeLayout>
