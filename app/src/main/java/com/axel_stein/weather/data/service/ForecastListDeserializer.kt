@@ -20,7 +20,7 @@ class ForecastListDeserializer : JsonDeserializer<List<Forecast>> {
         json?.asJsonObject?.let {
             val arr = it.getAsJsonArray("data")
 
-            arr.forEachIndexed { index, jsonElement ->
+            arr.forEach { jsonElement ->
                 val obj = jsonElement.asJsonObject
                 val weather = obj.get("weather").asJsonObject
 

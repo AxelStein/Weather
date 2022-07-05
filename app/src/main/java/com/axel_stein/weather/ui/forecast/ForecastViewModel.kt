@@ -47,7 +47,7 @@ class ForecastViewModel @Inject constructor(private val getForecast: GetForecast
 
             val result = getForecast(city, countryCode)
 
-            _isLoading.postValue(false)
+            _isLoading.value = false
 
             if (result.noData) {
                 _isNoDataShown.value = true

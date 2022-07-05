@@ -32,8 +32,11 @@ class LocationsFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         adapter.onItemClickListener = {
             findNavController().navigate(
-                R.id.actionOpenForecast,
-                bundleOf("city" to it.city, "country" to it.countryCode)
+                R.id.ForecastFragment,
+                bundleOf(
+                    "city" to it.city,
+                    "country" to it.countryCode,
+                )
             )
         }
 

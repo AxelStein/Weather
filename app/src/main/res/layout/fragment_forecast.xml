@@ -11,12 +11,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintEnd_toStartOf="@+id/icon"
+        app:layout_constraintEnd_toStartOf="@+id/summary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/date_time"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:text="London"/>
 
     <TextView
@@ -24,31 +25,35 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/icon"
+        app:layout_constraintEnd_toStartOf="@+id/summary"
         app:layout_constraintStart_toStartOf="@+id/city"
         app:layout_constraintTop_toBottomOf="@+id/city"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
         tools:text="Today"/>
 
     <TextView
         android:id="@+id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLength="32"
-        android:maxLines="1"
-        android:minWidth="48dp"
+        android:maxLines="2"
+        android:gravity="end"
+        android:maxWidth="112dp"
         app:layout_constraintEnd_toEndOf="@+id/temp"
         app:layout_constraintTop_toBottomOf="@+id/temp"
-        tools:text="Sunny"/>
+        app:layout_constraintHorizontal_bias="1"
+        tools:text="Thunderstorm with rain"/>
 
     <TextView
         android:id="@+id/temp"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:maxLines="1"
+        android:gravity="end"
         android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/summary"
+        app:layout_constraintEnd_toStartOf="@+id/icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="29 °C"/>
 
@@ -57,8 +62,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/summary"
-        app:layout_constraintEnd_toStartOf="@+id/summary"
         app:layout_constraintTop_toTopOf="@+id/temp"
         tools:src="@drawable/partly_cloudy"/>
 

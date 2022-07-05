@@ -24,31 +24,37 @@ class GetForecastUseCase(
         var error: Exception? = null
 
         val list = try {
-            val response = weatherService.fetchDailyForecast(city, countryCode, days)
-            if (response.isSuccessful) {
-                val list = response.body()
-                if (list.isNullOrEmpty()) {
-                    throw Exception("List is empty")
-                } else {
-                    dao.clearBy(city, countryCode)
-                    list.onEach {
-                        it.city = city
-                        it.countryCode = countryCode
-                        it.id = dao.insert(it)
-                    }
-                }
-                list
-            } else {
-                throw Exception(response.errorBody()?.string())
-            }
+            fetchFromService(city, countryCode, days)
         } catch (e: Exception) {
             error = e
-            e.printStackTrace()
-
             dao.selectBy(city, countryCode)
         }
 
         Result(list, error)
+    }
+
+    private suspend fun fetchFromService(
+        city: String,
+        countryCode: String,
+        days: Int
+    ): List<Forecast> {
+        val response = weatherService.fetchDailyForecast(city, countryCode, days)
+        return if (response.isSuccessful) {
+            val list = response.body()
+            if (list.isNullOrEmpty()) {
+                throw Exception("List is empty")
+            } else {
+                dao.clearBy(city, countryCode)
+                list.onEach { forecast ->
+                    forecast.city = city
+                    forecast.countryCode = countryCode
+                    forecast.id = dao.insert(forecast)
+                }
+            }
+            list
+        } else {
+            throw Exception(response.errorBody()?.string())
+        }
     }
 
     data class Result(

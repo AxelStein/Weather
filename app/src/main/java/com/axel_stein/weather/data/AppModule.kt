@@ -49,7 +49,6 @@ class AppModule {
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
 
-        // val token = object : TypeToken<List<Forecast>>() {}.type
         val type = TypeToken.getParameterized(List::class.java, Forecast::class.java).type
         val gson = GsonBuilder()
             .registerTypeAdapter(type, ForecastListDeserializer())

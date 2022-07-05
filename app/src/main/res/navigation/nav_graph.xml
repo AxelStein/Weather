@@ -9,11 +9,7 @@
         android:id="@+id/LocationsFragment"
         android:name="com.axel_stein.weather.ui.locations.LocationsFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_locations">
-        <action
-            android:id="@+id/actionOpenForecast"
-            app:destination="@id/ForecastFragment"/>
-    </fragment>
+        tools:layout="@layout/fragment_locations"/>
 
     <fragment
         android:id="@+id/ForecastFragment"
